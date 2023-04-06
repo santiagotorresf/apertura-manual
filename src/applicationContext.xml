@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:flow="http://www.springframework.org/schema/webflow-config"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+          http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd
+          http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
+          http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-4.0.xsd
+          http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.0.xsd
+          http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+          http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
+">
+    
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:bd_particulares.properties</value>
+                <value>classpath:bd_cabinaA.properties</value>
+                <value>classpath:bd_cabinaB.properties</value>
+                <value>classpath:bd_cabinaC.properties</value>
+                <value>classpath:bd_cabinaD.properties</value>
+            </list>
+        </property>
+    </bean>
+        
+    <bean id="dataSourceParticulares" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${particulares.jdbc.driver}"/>
+        <property name="url" value="${particulares.jdbc.url}"/>
+        <property name="username" value="${particulares.jdbc.username}"/>
+        <property name="password" value="${particulares.jdbc.password}"/>
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="initialSize" value="1"/>
+        <property name="maxActive" value="2"/>
+        <property name="maxIdle" value="1"/>
+        <property name="minIdle" value="1"/>
+        <property name="defaultAutoCommit" value="false"/>
+    </bean>
+    <bean id="dataSourceCabinaA" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${a.jdbc.driver}"/>
+        <property name="url" value="${a.jdbc.url}"/>
+        <property name="username" value="${a.jdbc.username}"/>
+        <property name="password" value="${a.jdbc.password}"/>
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="initialSize" value="1"/>
+        <property name="maxActive" value="2"/>
+        <property name="maxIdle" value="1"/>
+        <property name="minIdle" value="1"/>
+        <property name="defaultAutoCommit" value="false"/>
+    </bean>
+    <bean id="dataSourceCabinaB" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${b.jdbc.driver}"/>
+        <property name="url" value="${b.jdbc.url}"/>
+        <property name="username" value="${b.jdbc.username}"/>
+        <property name="password" value="${b.jdbc.password}"/>
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="initialSize" value="1"/>
+        <property name="maxActive" value="2"/>
+        <property name="maxIdle" value="1"/>
+        <property name="minIdle" value="1"/>
+        <property name="defaultAutoCommit" value="false"/>
+    </bean>
+    <bean id="dataSourceCabinaC" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${c.jdbc.driver}"/>
+        <property name="url" value="${c.jdbc.url}"/>
+        <property name="username" value="${c.jdbc.username}"/>
+        <property name="password" value="${c.jdbc.password}"/>
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="initialSize" value="1"/>
+        <property name="maxActive" value="2"/>
+        <property name="maxIdle" value="1"/>
+        <property name="minIdle" value="1"/>
+        <property name="defaultAutoCommit" value="false"/>
+    </bean>
+    <bean id="dataSourceCabinaD" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${d.jdbc.driver}"/>
+        <property name="url" value="${d.jdbc.url}"/>
+        <property name="username" value="${d.jdbc.username}"/>
+        <property name="password" value="${d.jdbc.password}"/>
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="initialSize" value="1"/>
+        <property name="maxActive" value="2"/>
+        <property name="maxIdle" value="1"/>
+        <property name="minIdle" value="1"/>
+        <property name="defaultAutoCommit" value="false"/>
+    </bean>
+    
+    <bean id="factoryParticulares" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSourceParticulares"/>
+        <property name="packagesToScan" value="fttg.particulares.entities"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="factoryCabinaA" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSourceCabinaA"/>
+        <property name="packagesToScan" value="fttg.particulares.entities"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="factoryCabinaB" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSourceCabinaB"/>
+        <property name="packagesToScan" value="fttg.particulares.entities"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+                <prop key="hibernate.show_sql">false</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="factoryCabinaC" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSourceCabinaC"/>
+        <property name="packagesToScan" value="fttg.particulares.entities"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+                <prop key="hibernate.show_sql">false</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="factoryCabinaD" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSourceCabinaD"/>
+        <property name="packagesToScan" value="fttg.particulares.entities"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+                <prop key="hibernate.show_sql">false</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <context:component-scan base-package="fttg"/>
+    <context:annotation-config/>
+    
+    <tx:annotation-driven transaction-manager="txManagerParticulares"/>
+    <tx:annotation-driven transaction-manager="txManagerCabinaA"/>
+    <tx:annotation-driven transaction-manager="txManagerCabinaB"/>
+    <tx:annotation-driven transaction-manager="txManagerCabinaC"/>
+    <tx:annotation-driven transaction-manager="txManagerCabinaD"/>
+    
+    <bean id="txManagerParticulares" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="factoryParticulares"/>
+    </bean>
+    <bean id="txManagerCabinaA" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="factoryCabinaA"/>
+    </bean>
+    <bean id="txManagerCabinaB" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="factoryCabinaB"/>
+    </bean>
+    <bean id="txManagerCabinaC" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="factoryCabinaC"/>
+    </bean>
+    <bean id="txManagerCabinaD" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="factoryCabinaD"/>
+    </bean>              
+</beans>
