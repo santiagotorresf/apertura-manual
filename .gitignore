@@ -1,0 +1,13 @@
+build.xml
+build/
+dist/
+logs/
+manifest.mf
+nbproject/
+src/applicationContext.xml
+src/bd_cabinaA.properties
+src/bd_cabinaB.properties
+src/bd_cabinaC.properties
+src/bd_cabinaD.properties
+src/bd_particulares.properties
+src/log4j.properties
